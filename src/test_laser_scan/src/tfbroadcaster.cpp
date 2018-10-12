@@ -3,7 +3,7 @@
 
 int main(int argc, char**argv){
 
-  ros::init(argc,argv, "Lidar");
+  ros::init(argc,argv, "liiiidar");
   ros::NodeHandle node;
 
   tf::TransformBroadcaster br;

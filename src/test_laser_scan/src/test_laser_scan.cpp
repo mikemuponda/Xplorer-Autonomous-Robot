@@ -4,10 +4,6 @@
 #include <std_msgs/String.h>
 #include <visualization_msgs/Marker.h>
 
-#define FREE 0
-#define OCCUPIED 1
-#define UNKNOWN 2
-
 class Listener 
 {
   public:
@@ -43,7 +39,7 @@ void Listener::scanCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
             y=point*sin(theta);
             listener.X[i]=x;
             listener.Y[i]=y;
-            //ROS_INFO("X: %f Y: %f DIST: %f",x,y,point);
+            ROS_INFO("X: %f Y: %f DIST: %f",x,y,point);
         }
 
     }
@@ -64,7 +60,7 @@ int main(int argc,char** argv)
     uint32_t shape = visualization_msgs::Marker::CUBE;
 
     int count=0;
-    int 2dGrid[20][20]={FALSE};
+   // int 2dGrid[20][20]={FALSE};
 
     while(ros::ok()){
      for (int i=0;i<360;i++){
