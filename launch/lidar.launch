@@ -1,0 +1,30 @@
+<launch>
+
+  
+   <param name="use_sim_time" value="true" />
+
+   <node pkg="gmapping" type="slam_gmapping" name="gmapping">
+        <param name="base_frame" value="base_link"/>
+        <param name="odom_frame" value="odom" />
+        <param name="maxRange" value="6.0"/>
+        <param name="maxUrange" value="5.9"/>
+        <param name="map_update_interval" value="0.5"/>
+        <param name="xmin" value="-30.0"/>
+        <param name="ymin" value="-30.0"/>
+        <param name="xmax" value="30.0"/> 
+        <param name="ymax" value="30.0"/>
+        <param name="delta" value="0.5" />
+        <param name="transform_publish_period" value="0.1"/>
+    </node>
+
+   <node pkg="tf" type="tf_remap" name="tf_remapper">
+   <rosparam param="mappings">
+    [{old: map, new: /dummymap},{old: odom, new: /dummyodom},{old: base_footprint, new: /dummyfootprint},{old: imu, new: /dummyimu}]
+   </rosparam>
+   </node>
+
+  <node pkg="rosbag" type="play" name="mikebag" output="screen" args="/tf:=/tf_old --clock /home/xplorer/Downloads/2018-10-23-18-05-01.bag">
+  <remap from="tf" to="tf_old" />
+  </node>
+   
+</launch>
