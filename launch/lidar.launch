@@ -3,9 +3,8 @@
   
    <param name="use_sim_time" value="true" />
 
-   <node pkg="gmapping" type="slam_gmapping" name="gmapping">
-        <param name="base_frame" value="base_link"/>
-        <param name="odom_frame" value="odom" />
+   <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
+      
         <param name="maxRange" value="6.0"/>
         <param name="maxUrange" value="5.9"/>
         <param name="map_update_interval" value="0.5"/>
@@ -16,10 +15,17 @@
         <param name="delta" value="0.5" />
         <param name="transform_publish_period" value="0.1"/>
     </node>
+  
+   <node pkg="mike_mapping" type="odom_baselk" name="odom_baselk"/>
+   <node pkg="mike_mapping" type="baselk_baselsr" name="baselk_baselsr"/>
+   <node pkg="mike_mapping" type="baseft_baselk" name="baseft_baselk"/>
+   <node pkg="tf" type="static_transform_publisher" name="dummy" args="0 0 0 0 0 0 map dummymap 100" />
+   <node pkg="rviz" type="rviz" name="rviz"/>
+
 
    <node pkg="tf" type="tf_remap" name="tf_remapper">
    <rosparam param="mappings">
-    [{old: map, new: /dummymap},{old: odom, new: /dummyodom},{old: base_footprint, new: /dummyfootprint},{old: imu, new: /dummyimu}]
+    [{old: map, new: /dummymap},{old: odom, new: /dummyodom},{old: base_footprint, new: /dummyfootprint}, {old: laser_frame, new: scan}]
    </rosparam>
    </node>
 

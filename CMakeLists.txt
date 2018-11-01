@@ -19,6 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
   visualization_msgs
+  create_autonomy
 )
 
 ## System dependencies are found with CMake's conventions
@@ -55,11 +56,11 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+ add_message_files(
+ FILES
+ map.msg
+
+ )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -142,10 +143,10 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/mike_mapping_node.cpp)
-add_executable(odom_base_link src/odom_base_link.cpp)
-add_executable(base_link_odom src/base_link_odom.cpp)
-add_executable(drive src/drive.cpp)
-add_executable(lidar_tf src/lidar_tf.cpp)
+add_executable(odom_baselk src/odom_baselk.cpp)
+add_executable(baseft_baselk src/baseft_baselk.cpp)
+add_executable(baselk_baselsr src/baselk_baselsr.cpp)
+add_executable(Compound_Map_node src/mapping.cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -160,18 +161,12 @@ add_executable(lidar_tf src/lidar_tf.cpp)
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(odom_base_link
-        ${catkin_LIBRARIES}
-        )
-target_link_libraries(base_link_odom
-        ${catkin_LIBRARIES}
-        )
-target_link_libraries(drive
-        ${catkin_LIBRARIES}
-        )
-target_link_libraries(lidar_tf
-        ${catkin_LIBRARIES}
-        )
+target_link_libraries(odom_baselk ${catkin_LIBRARIES})
+target_link_libraries(baseft_baselk ${catkin_LIBRARIES})
+target_link_libraries(baselk_baselsr ${catkin_LIBRARIES})
+target_link_libraries(Compound_Map_node ${catkin_LIBRARIES})
+
+add_dependencies(Compound_Map_node mike_mapping_generate_message_cpp)
 #############
 ## Install ##
 #############

@@ -43,7 +43,7 @@ int main(int argc, char** argv){
 tf::Transform transform;
 tf::Quaternion q;
 
-void pose_callback(const nav_msgs::Odometry::ConstPtr& msg)
+void pose_callback(const nav_msgs::OdometryConstPtr& msg)
 {
     static tf::TransformBroadcaster br;
     q.setX(msg->pose.pose.orientation.x);
