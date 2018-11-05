@@ -52,32 +52,54 @@
   <build_depend>message_generation</build_depend>
   <build_depend>rosbag</build_depend>
   <build_depend>roscpp</build_depend>
+  <build_depend>grid_map_core</build_depend>
+  <build_depend>grid_map_ros</build_depend>
+  <build_depend>grid_map_demos</build_depend>
+  <build_depend>grid_map_filters</build_depend>
+  <build_depend>grid_map_msgs</build_depend>
+  <build_depend>grid_map_rviz_plugin</build_depend>
+  <build_depend>grid_map_visualization</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>rplidar_ros</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>tf</build_depend>
+  <build_depend>create_autonomy</build_depend>
   <build_depend>gmapping</build_depend>
-  <build_depend>visualization_msgs</build_depend>
+ 
   <build_export_depend>rosbag</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>gmapping</build_export_depend>
+  <build_export_depend>grid_map_core</build_export_depend>
+  <build_export_depend>grid_map_ros</build_export_depend>
+  <build_export_depend>grid_map_filters</build_export_depend>
+  <build_export_depend>grid_map_msgs</build_export_depend>
+  <build_export_depend>grid_map_rviz_plugin</build_export_depend>
+  <build_export_depend>grid_map_visualization</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>rplidar_ros</build_export_depend>
   <build_export_depend>sensor_msgs</build_export_depend>
   <build_export_depend>std_msgs</build_export_depend>
   <build_export_depend>tf</build_export_depend>
-  <build_export_depend>visualization_msgs</build_export_depend>
+  <build_export_depend>create_autonomy</build_export_depend>
+
   <exec_depend>message_runtime</exec_depend>
   <exec_depend>rosbag</exec_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>gmapping</exec_depend>
+  <exec_depend>create_autonomy</exec_depend>
+  <exec_depend>grid_map_core</exec_depend>
+  <exec_depend>grid_map_ros</exec_depend>
+  <exec_depend>grid_map_filters</exec_depend>
+  <exec_depend>grid_map_msgs</exec_depend>
+  <exec_depend>grid_map_rviz_plugin</exec_depend>
+  <exec_depend>grid_map_visualization</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>rplidar_ros</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>tf</exec_depend>
-  <exec_depend>visualization_msgs</exec_depend>
+
 
 
   <!-- The export tag contains other, unspecified, tags -->

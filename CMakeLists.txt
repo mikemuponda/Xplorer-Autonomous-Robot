@@ -2,15 +2,16 @@ cmake_minimum_required(VERSION 2.8.3)
 project(mike_mapping)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  grid_map_core grid_map_ros grid_map_demos grid_map_filters grid_map_msgs     grid_map_rviz_plugin grid_map_visualization
+  ca_description ca_tools ca_msgs ca_driver
   gmapping
   message_generation
-  message_runtime
   rosbag
   roscpp
   rospy
@@ -18,8 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   tf
-  visualization_msgs
-  create_autonomy
+  #create_autonomy
 )
 
 ## System dependencies are found with CMake's conventions
@@ -77,10 +77,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   sensor_msgs#   std_msgs#   visualization_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -114,7 +114,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES mike_mapping
-#  CATKIN_DEPENDS grid_map message_generation message_runtime rosbag roscpp rospy rplidar_ros sensor_msgs std_msgs tf visualization_msgs
+  CATKIN_DEPENDS message_runtime
 #  DEPENDS system_lib
 )
 
@@ -125,7 +125,6 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -146,7 +145,7 @@ include_directories(
 add_executable(odom_baselk src/odom_baselk.cpp)
 add_executable(baseft_baselk src/baseft_baselk.cpp)
 add_executable(baselk_baselsr src/baselk_baselsr.cpp)
-add_executable(Compound_Map_node src/mapping.cpp)
+add_executable(new_map_node src/mapping.cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -164,9 +163,9 @@ add_executable(Compound_Map_node src/mapping.cpp)
 target_link_libraries(odom_baselk ${catkin_LIBRARIES})
 target_link_libraries(baseft_baselk ${catkin_LIBRARIES})
 target_link_libraries(baselk_baselsr ${catkin_LIBRARIES})
-target_link_libraries(Compound_Map_node ${catkin_LIBRARIES})
+target_link_libraries(new_map_node ${catkin_LIBRARIES})
 
-add_dependencies(Compound_Map_node mike_mapping_generate_message_cpp)
+add_dependencies(new_map_node mike_mapping_generate_message_cpp)
 #############
 ## Install ##
 #############
