@@ -10,9 +10,9 @@
         <param name="map_update_interval" value="0.5"/>
         <param name="xmin" value="-30.0"/>
         <param name="ymin" value="-30.0"/>
-        <param name="xmax" value="30.0"/> 
-        <param name="ymax" value="30.0"/>
-        <param name="delta" value="0.5" />
+        <param name="xmax" value="100.0"/> 
+        <param name="ymax" value="100.0"/>
+        <param name="delta" value="0.05" />
         <param name="transform_publish_period" value="0.1"/>
     </node>
   
