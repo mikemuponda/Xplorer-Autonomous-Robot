@@ -20,6 +20,7 @@
    <node pkg="mike_mapping" type="odom_baselk" name="odom_baselk"/>
    <node pkg="mike_mapping" type="baselk_baselsr" name="baselk_baselsr"/>
    <node pkg="mike_mapping" type="baseft_baselk" name="baseft_baselk"/>
+   <node pkg="mike_mapping" type="mapping" name="mapping"/>
    <node pkg="tf" type="static_transform_publisher" name="dummy" args="0 0 0 0 0 0 map dummymap 100" />
    <node pkg="rviz" type="rviz" name="rviz"/>
 

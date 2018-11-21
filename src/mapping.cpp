@@ -70,11 +70,11 @@ void Occupancy::occupancyCallback(const nav_msgs::OccupancyGrid::ConstPtr& msg)
 {
 	if(!isInit)
          {
-  	  map.add("occupancy", -1.0);
+  	  map.add("occupancy",-1.0);
   	  Position origin=Position(msg->info.origin.position.x, msg->info.origin.position.y);
   	  map.setPosition(origin);
   	  isInit=true;
-	}
+	 }
 
   	GridMapRosConverter::fromOccupancyGrid(*msg,"occupancy", map);
 
@@ -85,7 +85,8 @@ void Occupancy::occupancyCallback(const nav_msgs::OccupancyGrid::ConstPtr& msg)
 
  	 //This improves efficiciency in traversing grid_map 
          grid_map::Matrix& data = occupancy.map["bumper"];
-       
+
+        //left bumper
         if(bumper.left_bumper)
            {
             for(grid_map::LineIterator iterator(occupancy.map,startlft,endlft); !iterator.isPastEnd();++iterator)
@@ -93,7 +94,7 @@ void Occupancy::occupancyCallback(const nav_msgs::OccupancyGrid::ConstPtr& msg)
                map.at("bumper",*iterator)=100;
 	      }
           }
-           //change start and end Indexes      
+          //Right bumper    
           if(bumper.right_bumper){
 
                for(grid_map::LineIterator iterator(occupancy.map,startrgt,endrgt); !iterator.isPastEnd();++iterator){
@@ -160,7 +161,6 @@ int main(int argc,char** argv)
     ros::Subscriber bmpr_sub = nh.subscribe("/bumper",100,&Bumper::bumperCallback,&bumper);
     ros::Subscriber occu_sub = nh.subscribe("/map",100,&Occupancy::occupancyCallback,&occupancy);
     ros::Subscriber odom_sub= nh.subscribe("/odom",100,&Odom::odomCallback,&odom);
-    
     
     publisher = nh.advertise<grid_map_msgs::GridMap>("/grid_map",1,true);
     odom.ptrListener=new(tf::TransformListener);

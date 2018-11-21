@@ -19,7 +19,6 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   tf
-  #create_autonomy
 )
 
 ## System dependencies are found with CMake's conventions
@@ -91,7 +90,7 @@ generate_messages(
 ## * In the file package.xml:
 ##   * add a build_depend and a exec_depend tag for "dynamic_reconfigure"
 ## * In this file (CMakeLists.txt):
-##   * add "dynamic_reconfigure" to
+##   * add "dynamic_reconfighttps://answers.ros.org/question/278616/how-to-create-a-publisher-about-trajectory-path-then-show-it-in-rviz/ure" to
 ##     find_package(catkin REQUIRED COMPONENTS ...)
 ##   * uncomment the "generate_dynamic_reconfigure_options" section below
 ##     and list every .cfg file to be processed
@@ -145,7 +144,7 @@ include_directories(
 add_executable(odom_baselk src/odom_baselk.cpp)
 add_executable(baseft_baselk src/baseft_baselk.cpp)
 add_executable(baselk_baselsr src/baselk_baselsr.cpp)
-add_executable(new_map_node src/mapping.cpp)
+add_executable(mapping src/mapping.cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -163,9 +162,9 @@ add_executable(new_map_node src/mapping.cpp)
 target_link_libraries(odom_baselk ${catkin_LIBRARIES})
 target_link_libraries(baseft_baselk ${catkin_LIBRARIES})
 target_link_libraries(baselk_baselsr ${catkin_LIBRARIES})
-target_link_libraries(new_map_node ${catkin_LIBRARIES})
+target_link_libraries(mapping ${catkin_LIBRARIES})
 
-add_dependencies(new_map_node mike_mapping_generate_message_cpp)
+add_dependencies(mapping mike_mapping_generate_message_cpp)
 #############
 ## Install ##
 #############
@@ -197,7 +196,7 @@ add_dependencies(new_map_node mike_mapping_generate_message_cpp)
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
 #   # myfile1
-#   # myfile2
+#   # myfile2https://answers.ros.org/question/278616/how-to-create-a-publisher-about-trajectory-path-then-show-it-in-rviz/
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
