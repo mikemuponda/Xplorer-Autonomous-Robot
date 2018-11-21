@@ -20,7 +20,7 @@
    <node pkg="mike_mapping" type="odom_baselk" name="odom_baselk"/>
    <node pkg="mike_mapping" type="baselk_baselsr" name="baselk_baselsr"/>
    <node pkg="mike_mapping" type="baseft_baselk" name="baseft_baselk"/>
-   <node pkg="mike_mapping" type="mapping" name="mapping"/>
+   <node pkg="mike_mapping" type="mapping" name="mapping" output="screen" />
    <node pkg="tf" type="static_transform_publisher" name="dummy" args="0 0 0 0 0 0 map dummymap 100" />
    <node pkg="rviz" type="rviz" name="rviz"/>
 
@@ -31,7 +31,7 @@
    </rosparam>
    </node>
 
-  <node pkg="rosbag" type="play" name="mikebag" output="screen" args="/tf:=/tf_old --clock /home/xplorer/Downloads/2018-10-23-18-05-01.bag">
+  <node pkg="rosbag" type="play" name="mikebag" args="/tf:=/tf_old --clock /home/xplorer/Downloads/2018-10-23-18-05-01.bag">
   <remap from="tf" to="tf_old" />
   </node>
    

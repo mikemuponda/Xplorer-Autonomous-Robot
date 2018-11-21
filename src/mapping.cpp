@@ -14,7 +14,7 @@
 #include <tf/transform_listener.h>
 
 using namespace grid_map;
-ros::Publisher publisher;
+ros::Publisher* publisher;//Adjust code for publisher
 
 class Bumper 
 {
@@ -63,27 +63,8 @@ void Bumper::bumperCallback(const ca_msgs::Bumper::ConstPtr& msg)
    left_bumper=msg->is_left_pressed;
    right_bumper=msg->is_right_pressed;
    }
-    
-}
-
-void Occupancy::occupancyCallback(const nav_msgs::OccupancyGrid::ConstPtr& msg) 
-{
-	if(!isInit)
-         {
-  	  map.add("occupancy",-1.0);
-  	  Position origin=Position(msg->info.origin.position.x, msg->info.origin.position.y);
-  	  map.setPosition(origin);
-  	  isInit=true;
-	 }
-
-  	GridMapRosConverter::fromOccupancyGrid(*msg,"occupancy", map);
-
-         if(!bumper.isInitialized){
-  	     map.add("bumper", -1.0);
-             bumper.isInitialized=true;
-           }
-
- 	 //This improves efficiciency in traversing grid_map 
+   
+    //This improves efficiciency in traversing grid_map 
          grid_map::Matrix& data = occupancy.map["bumper"];
 
         //left bumper
@@ -105,6 +86,32 @@ void Occupancy::occupancyCallback(const nav_msgs::OccupancyGrid::ConstPtr& msg)
         grid_map_msgs::GridMap message;
         GridMapRosConverter::toMessage(map,message);
         publisher.publish(message);
+    
+}
+
+void Occupancy::occupancyCallback(const nav_msgs::OccupancyGrid::ConstPtr& msg) 
+{
+   
+	if(!isInit)
+         {
+  	  map.add("occupancy",-1.0);
+  	  Position origin=Position(msg->info.origin.position.x, msg->info.origin.position.y);
+  	  map.setPosition(origin);
+  	  isInit=true;
+	 }
+
+  	GridMapRosConverter::fromOccupancyGrid(*msg,"occupancy", map);
+
+         if(!bumper.isInitialized){
+  	         map.add("bumper", -1.0);
+             bumper.isInitialized=true;
+           }
+  //publish original map anyways since map is always needed
+  
+  //also publish conatenated occupancy grid
+  //publish mike_grid_map
+  //publish mike_occupancy_grid-map
+ 	
 }  
 
 void Odom::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) 
@@ -117,34 +124,34 @@ void Odom::odomCallback(const nav_msgs::Odometry::ConstPtr& msg)
     ps_in.header.stamp=ros::Time::now();
 
     //left bumper start_pos
-    ps_in.pose.position.x = x; 
-    ps_in.pose.position.y = y+0.174; 
-    ps_in.pose.position.z = z;   
+    ps_in.pose.position.x = 0.0; 
+    ps_in.pose.position.y = 0.174; 
+    ps_in.pose.position.z = 0.0;   
   
     ptrListener->transformPose("map",ps_in,ps_out);
     occupancy.startlft(ps_out.pose.position.x,ps_out.pose.position.y);
 
    //left bumper end_pos
-    ps_in.pose.position.x = x+0.174; 
-    ps_in.pose.position.y = y; 
-    ps_in.pose.position.z = z;   
+    ps_in.pose.position.x = 0.174; 
+    ps_in.pose.position.y = 0.0; 
+    ps_in.pose.position.z = 0.0;   
   
     ptrListener->transformPose("map",ps_in,ps_out);
     occupancy.endlft(ps_out.pose.position.x,ps_out.pose.position.y);
 
     //Right bumper start_pos
-    ps_in.pose.position.x = x; 
-    ps_in.pose.position.y = y-0.174; 
-    ps_in.pose.position.z = z;   
+    ps_in.pose.position.x = 0.0; 
+    ps_in.pose.position.y = -0.174; 
+    ps_in.pose.position.z = 0.0;   
   
     ptrListener->transformPose("map",ps_in,ps_out);
     occupancy.startrgt(ps_out.pose.position.x,ps_out.pose.position.y);
 
    
     //Right bumper end_pos
-    ps_in.pose.position.x = x-0.174; 
-    ps_in.pose.position.y = y; 
-    ps_in.pose.position.z = z;   
+    ps_in.pose.position.x = -0.174; 
+    ps_in.pose.position.y = 0.0; 
+    ps_in.pose.position.z = 0.0;   
   
     ptrListener->transformPose("map",ps_in,ps_out);
     occupancy.endrgt(ps_out.pose.position.x,ps_out.pose.position.y);
@@ -158,13 +165,15 @@ int main(int argc,char** argv)
 {
     ros::init(argc,argv,"new_map_node");
     ros::NodeHandle nh;
+    publisher = nh.advertise<grid_map_msgs::GridMap>("/grid_map",1,true);
     ros::Subscriber bmpr_sub = nh.subscribe("/bumper",100,&Bumper::bumperCallback,&bumper);
     ros::Subscriber occu_sub = nh.subscribe("/map",100,&Occupancy::occupancyCallback,&occupancy);
     ros::Subscriber odom_sub= nh.subscribe("/odom",100,&Odom::odomCallback,&odom);
     
-    publisher = nh.advertise<grid_map_msgs::GridMap>("/grid_map",1,true);
+   
     odom.ptrListener=new(tf::TransformListener);
-    ros::spinOnce();
+    ros::spin();
+    //delete the publisher pointer
        
     return 0;
 }
